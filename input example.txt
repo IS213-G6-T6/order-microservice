@@ -2,10 +2,10 @@ To create order [post] http://localhost:5000/order
 example input:
 {
    "customerID": "9",
-   "customer_name": "Bob",
+   "customer_name": "john",
    "phone_no": "94208576",
    "total_price": "10000.00",
-   "status": "testing",
+   "status": "waiting for hawker",
     "order_items": [
       {
         "item_name": "bak chor mee",
@@ -23,7 +23,7 @@ example input:
 To update order [post] http://localhost:5000/order/<string:orderID>
 example input:
 {
-   "status": "PROCESSING"
+   "status": "Accepted"
 }
 
 To get order [get] http://localhost:5000/order/<int:orderID>
