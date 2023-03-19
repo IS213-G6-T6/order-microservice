@@ -10,9 +10,7 @@ docker run -p 5000:5000 -e dbURL=mysql+mysqlconnector://is213@host.docker.intern
   
   
 To create order [post] (example input in input example.txt): http://localhost:5000/order
-  example input in input example.txt
 
 To update order [post] (example input in input example.txt): http://localhost:5000/order/<string:orderID>
   
-
 To get order [get]: http://localhost:5000/order/<int:orderID>
