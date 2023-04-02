@@ -41,6 +41,7 @@ class Order(db.Model):
 
     orderID = db.Column(db.Integer, primary_key=True)
     customerID = db.Column(db.Integer, db.ForeignKey('customer.customerID'), nullable=False, index=True)
+    hawkerID = db.Column(db.Integer, nullable=False)
     total_price = db.Column(db.Float, nullable=False)
     status = db.Column(db.String(32), nullable=False)
 
@@ -50,6 +51,7 @@ class Order(db.Model):
         dto = {
             'orderID': self.orderID,
             'customerID': self.customerID,
+            'hawkerID': self.hawkerID,
             'customer_name': self.customer.customer_name,
             'phone_no': self.customer.phone_no,
             'total_price': self.total_price,
@@ -96,6 +98,25 @@ def get_all():
         }
     ), 404
 
+@app.route("/order/hawker/<int:hawkerID>")
+def get_all_hawker(hawkerID):
+    orderlist = Order.query.filter_by(hawkerID=hawkerID).all()
+    if len(orderlist):
+        return jsonify(
+            {
+                "code": 200,
+                "data": {
+                    "orders": [order.json() for order in orderlist]
+                }
+            }
+        )
+    return jsonify(
+        {
+            "code": 404,
+            "message": "There are no orders with this hawker."
+        }
+    ), 404
+
 
 @app.route("/order/<int:orderID>")
 def find_by_orderID(orderID):
@@ -128,9 +149,10 @@ def create_order():
         phone_no = request.json.get('phone_no', None)
         add_customer = Customer(customerID=customerID, customer_name=customer_name, phone_no=phone_no)
 
+    hawkerID = request.json.get('hawkerID', None)
     total_price = request.json.get('total_price', None)
     status = request.json.get('status', None)
-    order = Order(customerID=customerID, total_price=total_price, status=status)
+    order = Order(customerID=customerID, hawkerID=hawkerID, total_price=total_price, status=status)
 
     order_items = request.json.get('order_items', None)
     for item in order_items:
