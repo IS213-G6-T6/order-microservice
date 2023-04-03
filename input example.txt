@@ -27,3 +27,7 @@ example input:
 }
 
 To get order [get] http://localhost:5000/order/<int:orderID>
+
+
+
+get all order from a hawker [get] http://localhost:5000/order/hawker/<int:hawkerID>
